@@ -7,6 +7,7 @@ Integrantes: Cielo Cuatle Uriel (202631542)
 */
 
 #include <stdio.h>
+#include <math.h>
 
 // Declaracion de matrices precargadas
 float matriz1[2][2] = {{2.0, 5.0}, {3.0, 1.0}};
@@ -84,8 +85,6 @@ void sumaMatrices(void)
             }
             printf("\n");
         }
-
-
 
     } else if (opcionSuma == 2) {
         // Lógica para elegir matrices precargadas
@@ -385,12 +384,466 @@ void multiplicacionEscalar(void)
 
     } else if (opcionEscalar == 2) {
         // Lógica para elegir matrices precargadas
+        int opcionmatriz;
+    
+        printf("\nMatrices precargadas:\n");
+        printf("1. Matriz 1 (2x2)\n");
+        printf("2. Matriz 2 (2x2)\n");
+        printf("3. Matriz 3 (2x2)\n");
+        printf("4. Matriz 4 (3x3)\n");
+        printf("5. Matriz 5 (3x3)\n");
+    
+        printf("Seleccione la matriz a multiplicar por un escalar: ");
+        scanf("%d", &opcionmatriz);
+  
+        while(opcionmatriz < 1 || opcionmatriz > 5)
+        {
+            printf("Opcion invalida. Elija entre 1 y 5: ");
+            scanf("%d", &opcionmatriz);
+        }
 
+        printf("Ingrese el escalar K: ");
+        scanf("%f", &escalar);
+
+        if(opcionmatriz >= 1 && opcionmatriz <= 3)
+        {
+            printf("\nResultado:\n");
+
+            for(int i = 0; i < 2; i++)
+            {
+                for(int j = 0; j < 2; j++)
+                {
+                    float valor;
+
+                    if(opcionmatriz == 1)
+                        valor = matriz1[i][j];
+                    else if(opcionmatriz == 2)
+                        valor = matriz2[i][j];
+                    else
+                        valor = matriz3[i][j];
+
+                    printf("%.2f ", valor * escalar);
+                }
+                printf("\n");
+            }
+        }
+        else
+        {
+            printf("\nResultado:\n");
+
+            for(int i = 0; i < 3; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    float valor;
+
+                    if(opcionmatriz == 4)
+                        valor = matriz4[i][j];
+                    else
+                        valor = matriz5[i][j];
+
+                    printf("%.2f ", valor * escalar);
+                }
+                printf("\n");
+            }
+        }
     }
 
 }
 
-int main(){
+//Logica de la multiplicacion de matrices
+void multiplicacionMatrices(void)
+{
+    int filasU, columnasU, filasV, columnasV;
+    int opcionMulti = 0;
+    
+    printf("¿Desea ingresar sus propias matrices o elegir matrices precargadas? (1 = Ingresar, 2 = Elegir): ");
+    scanf("%d", &opcionMulti);
+    while(opcionMulti != 1 && opcionMulti != 2) {
+        printf("Opción inválida. Por favor, elija 1 o 2.\n");
+        scanf("%d", &opcionMulti);
+    }
+    
+    //Ingresar matrices manualmente
+    if(opcionMulti == 1) {
+        //Ingresar dimensiones de las matrices
+        printf("Ingrese las filas de la primera matriz (Hasta 3 filas):\n");
+        scanf("%d", &filasU);
+        while(filasU < 1 || filasU > 3) {
+            printf("Número de filas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &filasU);
+        }
+        printf("Ingrese las columnas de la primera matriz (Hasta 3 columnas):\n");
+        scanf("%d", &columnasU);
+        while(columnasU < 1 || columnasU > 3) {
+            printf("Número de columnas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &columnasU);
+        }
+
+        //Asignar dimensiones de la segunda matriz
+        filasV = columnasU; // Para multiplicación, filas de la segunda matriz deben ser iguales a columnas de la primera
+        printf("Ingrese las columnas de la segunda matriz (Hasta 3 filas):\n");
+        scanf("%d", &filasV);
+        while(filasV < 1 || filasV > 3) {
+            printf("Número de filas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &filasV);
+        }
+        
+        
+        //Declarar matrices
+        float matrizU1[filasU][columnasU];
+        float matrizV1[filasV][columnasV];
+        float matrizResU[filasU][columnasV];
+
+        //Ingresar datos de las matrices
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                printf("Ingrese el elemento [%d][%d] de la primera matriz: ", i, j);
+                scanf("%f", &matrizU1[i][j]);
+            }
+        }
+
+        printf("\n");
+
+        for(int i = 0; i < filasV; i++) {
+            for(int j = 0; j < columnasV; j++) {
+                printf("Ingrese el elemento [%d][%d] de la segunda matriz: ", i, j);
+                scanf("%f", &matrizV1[i][j]);
+            }
+        }
+
+        //Multiplicación de matrices
+        for(int i = 0; i < filasV; i++) {
+            for(int j = 0; j < columnasV; j++) {
+                for(int k = 0; k < columnasU; k++) {
+                    matrizResU[i][j] += matrizU1[i][k] * matrizV1[k][j];
+                }
+            }
+        }
+
+        printf("Resultado de la multiplicación de matrices:\n");
+        for(int i = 0; i < filasV; i++) {
+            for(int j = 0; j < columnasV; j++) {
+                printf("%.2f ", matrizResU[i][j]);
+            }
+            printf("\n");
+        }
+    } else if (opcionMulti == 2) {
+        // Lógica para elegir matrices precargadas
+
+    }
+}
+
+//Logica de la determinante de una matriz
+void determinanteMatriz(void)
+{
+    int filasU, columnasU;
+    int opcionDet = 0;
+    int determinante = 0;
+    printf("¿Desea ingresar su propias matriz o elegir una de las matrices precargadas? (1 = Ingresar, 2 = Elegir): ");
+    scanf("%d", &opcionDet);
+    while(opcionDet != 1 && opcionDet != 2) {
+        printf("Opción inválida. Por favor, elija 1 o 2.\n");
+        scanf("%d", &opcionDet);
+    }
+    
+    //Ingresar matrices manualmente
+    if(opcionDet == 1) {
+        //Ingresar dimensiones de las matrices
+        printf("Ingrese la matriz cuadrada hasta 3x3 (2=2x2, 3=3x3):\n");
+        scanf("%d", &filasU);
+        while(filasU != 2 && filasU != 3) {
+            printf("Número inválido. Por favor, ingrese 2 o 3: ");
+            scanf("%d", &filasU);
+        }
+
+        
+        //Ajustar columnas para que sea cuadrada
+        columnasU = filasU;
+        
+        //Declarar matrices
+        float matrizU1[filasU][columnasU];
+
+        //Ingresar datos de la matriz
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                printf("Ingrese el elemento [%d][%d] de la matriz: ", i, j);
+                scanf("%f", &matrizU1[i][j]);
+            }
+        }
+
+        printf("\n");
+
+        //Obteniendo el determinante
+        if(filasU == 2) {
+            determinante = (matrizU1[0][0] * matrizU1[1][1]) - (matrizU1[0][1] * matrizU1[1][0]);
+        } else if(filasU == 3) {
+            determinante = (matrizU1[0][0] * ((matrizU1[1][1] * matrizU1[2][2]) - (matrizU1[1][2] * matrizU1[2][1]))) -
+                           (matrizU1[0][1] * ((matrizU1[1][0] * matrizU1[2][2]) - (matrizU1[1][2] * matrizU1[2][0]))) +
+                           (matrizU1[0][2] * ((matrizU1[1][0] * matrizU1[2][1]) - (matrizU1[1][1] * matrizU1[2][0])));
+        }
+
+        printf("El determinante de la matriz es: %d\n", determinante);
+
+    } else if (opcionDet == 2) {
+        // Logica para elegir matrices precargadas y calcular su determinante
+
+    }
+    
+}
+
+//Logica de la transpuesta de una matriz
+void transpuestaMatriz(void)
+{
+    int filasU, columnasU;
+    int opcionTransp = 0;
+    
+    printf("¿Desea ingresar su propia matriz o elegir una de las matrices precargadas? (1 = Ingresar, 2 = Elegir): ");
+    scanf("%d", &opcionTransp);
+    while(opcionTransp != 1 && opcionTransp != 2) {
+        printf("Opción inválida. Por favor, elija 1 o 2.\n");
+        scanf("%d", &opcionTransp);
+    }
+    
+    //Ingresar matrices manualmente
+    if(opcionTransp == 1) {
+        //Ingresar dimensiones de las matrices
+        printf("Ingrese las filas de la matriz (Hasta 3 filas):\n");
+        scanf("%d", &filasU);
+        while(filasU < 1 || filasU > 3) {
+            printf("Número de filas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &filasU);
+        }
+        printf("Ingrese las columnas de la matriz (Hasta 3 columnas):\n");
+        scanf("%d", &columnasU);
+        while(columnasU < 1 || columnasU > 3) {
+            printf("Número de columnas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &columnasU);
+        }
+        
+        //Declarar matrices
+        float matrizU1[filasU][columnasU];
+        float matrizResU[filasU][columnasU];
+
+        //Ingresar datos de las matrices
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                printf("Ingrese el elemento [%d][%d] de la matriz: ", i, j);
+                scanf("%f", &matrizU1[i][j]);
+            }
+        }
+
+        printf("\n");
+
+        //Transpuesta de la matriz
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                matrizResU[j][i] = matrizU1[i][j];
+            }
+        }
+
+        printf("Resultado de la transpuesta de la matriz:\n");
+        for(int i = 0; i < columnasU; i++) {
+            for(int j = 0; j < filasU; j++) {
+                printf("%.2f ", matrizResU[i][j]);
+            }
+            printf("\n");
+        }
+
+    } else if (opcionTransp == 2) {
+        // Lógica para elegir matrices precargadas
+    }
+
+}
+
+//Logica de la inversa de una matriz
+void inversaMatriz(void)
+{
+    int filasU, columnasU = 0;
+    int opcionInv = 0;
+    int matrizElegida;
+    float matrizU1[3][3] = {0};
+    float matrizInversa[3][3] = {0};
+    float determinante;
+    
+    printf("¿Desea ingresar su propia matriz o elegir una de las matrices precargadas? (1 = Ingresar, 2 = Elegir): ");
+    scanf("%d", &opcionInv);
+    while(opcionInv != 1 && opcionInv != 2) {
+        printf("Opción inválida. Por favor, elija 1 o 2.\n");
+        scanf("%d", &opcionInv);
+    }
+    
+    //Ingresar matrices manualmente
+    if(opcionInv == 1) {
+        //Ingresar dimensiones de las matrices
+        printf("Ingrese la matriz cuadrada hasta 3x3 (2=2x2, 3=3x3):\n");
+        scanf("%d", &filasU);
+        while(filasU != 2 && filasU != 3) {
+            printf("Número inválido. Por favor, ingrese 2 o 3: ");
+            scanf("%d", &filasU);
+        }
+
+        
+        //Ajustar columnas para que sea cuadrada
+        columnasU = filasU;
+        
+        //Ingresar datos de la matriz
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                printf("Ingrese el elemento [%d][%d] de la matriz: ", i, j);
+                scanf("%f", &matrizU1[i][j]);
+            }
+        }
+
+        printf("\n");
+
+        
+        //Calcular la inversa de la matriz
+        if(filasU == 2) {
+            determinante = (matrizU1[0][0] * matrizU1[1][1]) -
+                           (matrizU1[0][1] * matrizU1[1][0]);
+
+            if(fabsf(determinante) < 0.000001f) {
+                printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                return;
+            }
+
+            matrizInversa[0][0] = matrizU1[1][1] / determinante;
+            matrizInversa[0][1] = -matrizU1[0][1] / determinante;
+            matrizInversa[1][0] = -matrizU1[1][0] / determinante;
+            matrizInversa[1][1] = matrizU1[0][0] / determinante;
+        } else {
+            determinante = matrizU1[0][0] *
+                           ((matrizU1[1][1] * matrizU1[2][2]) -
+                            (matrizU1[1][2] * matrizU1[2][1])) -
+                           matrizU1[0][1] *
+                           ((matrizU1[1][0] * matrizU1[2][2]) -
+                            (matrizU1[1][2] * matrizU1[2][0])) +
+                           matrizU1[0][2] *
+                           ((matrizU1[1][0] * matrizU1[2][1]) -
+                            (matrizU1[1][1] * matrizU1[2][0]));
+
+            if(fabsf(determinante) < 0.000001f) {
+                printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                return;
+            }
+
+            matrizInversa[0][0] = ((matrizU1[1][1] * matrizU1[2][2]) -
+                                  (matrizU1[1][2] * matrizU1[2][1])) / determinante;
+            matrizInversa[0][1] = ((matrizU1[0][2] * matrizU1[2][1]) -
+                                  (matrizU1[0][1] * matrizU1[2][2])) / determinante;
+            matrizInversa[0][2] = ((matrizU1[0][1] * matrizU1[1][2]) -
+                                  (matrizU1[0][2] * matrizU1[1][1])) / determinante;
+            matrizInversa[1][0] = ((matrizU1[1][2] * matrizU1[2][0]) -
+                                  (matrizU1[1][0] * matrizU1[2][2])) / determinante;
+            matrizInversa[1][1] = ((matrizU1[0][0] * matrizU1[2][2]) -
+                                  (matrizU1[0][2] * matrizU1[2][0])) / determinante;
+            matrizInversa[1][2] = ((matrizU1[0][2] * matrizU1[1][0]) -
+                                  (matrizU1[0][0] * matrizU1[1][2])) / determinante;
+            matrizInversa[2][0] = ((matrizU1[1][0] * matrizU1[2][1]) -
+                                  (matrizU1[1][1] * matrizU1[2][0])) / determinante;
+            matrizInversa[2][1] = ((matrizU1[0][1] * matrizU1[2][0]) -
+                                  (matrizU1[0][0] * matrizU1[2][1])) / determinante;
+            matrizInversa[2][2] = ((matrizU1[0][0] * matrizU1[1][1]) -
+                                  (matrizU1[0][1] * matrizU1[1][0])) / determinante;
+        }
+
+    } else if (opcionInv == 2) {
+        printf("\nMatrices precargadas:\n");
+        printf("1. Matriz 1 (2x2)\n");
+        printf("2. Matriz 2 (2x2)\n");
+        printf("3. Matriz 3 (2x2)\n");
+        printf("4. Matriz 4 (3x3)\n");
+        printf("5. Matriz 5 (3x3)\n");
+        printf("\nSeleccione la matriz: ");
+        scanf("%d", &matrizElegida);
+
+        while(matrizElegida < 1 || matrizElegida > 5) {
+            printf("Opcion invalida. Elija entre 1 y 5: ");
+            scanf("%d", &matrizElegida);
+        }
+
+        if(matrizElegida <= 3) {
+            filasU = 2;
+            columnasU = 2;
+        } else {
+            filasU = 3;
+            columnasU = 3;
+        }
+
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                if(matrizElegida == 1)
+                    matrizU1[i][j] = matriz1[i][j];
+                else if(matrizElegida == 2)
+                    matrizU1[i][j] = matriz2[i][j];
+                else if(matrizElegida == 3)
+                    matrizU1[i][j] = matriz3[i][j];
+                else if(matrizElegida == 4)
+                    matrizU1[i][j] = matriz4[i][j];
+                else
+                    matrizU1[i][j] = matriz5[i][j];
+            }
+        }
+
+        if(filasU == 2) {
+            determinante = (matrizU1[0][0] * matrizU1[1][1]) -
+                           (matrizU1[0][1] * matrizU1[1][0]);
+            if(fabsf(determinante) < 0.000001f) {
+                printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                return;
+            }
+            matrizInversa[0][0] = matrizU1[1][1] / determinante;
+            matrizInversa[0][1] = -matrizU1[0][1] / determinante;
+            matrizInversa[1][0] = -matrizU1[1][0] / determinante;
+            matrizInversa[1][1] = matrizU1[0][0] / determinante;
+        } else {
+            determinante = matrizU1[0][0] *
+                           ((matrizU1[1][1] * matrizU1[2][2]) -
+                            (matrizU1[1][2] * matrizU1[2][1])) -
+                           matrizU1[0][1] *
+                           ((matrizU1[1][0] * matrizU1[2][2]) -
+                            (matrizU1[1][2] * matrizU1[2][0])) +
+                           matrizU1[0][2] *
+                           ((matrizU1[1][0] * matrizU1[2][1]) -
+                            (matrizU1[1][1] * matrizU1[2][0]));
+            if(fabsf(determinante) < 0.000001f) {
+                printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                return;
+            }
+            matrizInversa[0][0] = ((matrizU1[1][1] * matrizU1[2][2]) -
+                                  (matrizU1[1][2] * matrizU1[2][1])) / determinante;
+            matrizInversa[0][1] = ((matrizU1[0][2] * matrizU1[2][1]) -
+                                  (matrizU1[0][1] * matrizU1[2][2])) / determinante;
+            matrizInversa[0][2] = ((matrizU1[0][1] * matrizU1[1][2]) -
+                                  (matrizU1[0][2] * matrizU1[1][1])) / determinante;
+            matrizInversa[1][0] = ((matrizU1[1][2] * matrizU1[2][0]) -
+                                  (matrizU1[1][0] * matrizU1[2][2])) / determinante;
+            matrizInversa[1][1] = ((matrizU1[0][0] * matrizU1[2][2]) -
+                                  (matrizU1[0][2] * matrizU1[2][0])) / determinante;
+            matrizInversa[1][2] = ((matrizU1[0][2] * matrizU1[1][0]) -
+                                  (matrizU1[0][0] * matrizU1[1][2])) / determinante;
+            matrizInversa[2][0] = ((matrizU1[1][0] * matrizU1[2][1]) -
+                                  (matrizU1[1][1] * matrizU1[2][0])) / determinante;
+            matrizInversa[2][1] = ((matrizU1[0][1] * matrizU1[2][0]) -
+                                  (matrizU1[0][0] * matrizU1[2][1])) / determinante;
+            matrizInversa[2][2] = ((matrizU1[0][0] * matrizU1[1][1]) -
+                                  (matrizU1[0][1] * matrizU1[1][0])) / determinante;
+        }
+    }
+
+    printf("La matriz inversa es:\n");
+    for(int i = 0; i < filasU; i++) {
+        for(int j = 0; j < columnasU; j++) {
+            printf("%.2f ", matrizInversa[i][j]);
+        }
+        printf("\n");
+
+    }
+}
+
+int main(void)
+{
     //Menu de opciones
     int opcion = 0;
 
@@ -429,15 +882,23 @@ int main(){
             break;
         case 4:
             printf("Multiplicacion de matrices\n");
+            multiplicacionMatrices();
+
             break;
         case 5:
             printf("Determinante de una matriz\n");
+            determinanteMatriz();
+
             break;
         case 6:
             printf("Transpuesta de una matriz\n");
+            transpuestaMatriz();
+
             break;
         case 7:
             printf("Inversa de una matriz\n");
+            inversaMatriz();
+
             break;
     }
     
