@@ -177,7 +177,6 @@ void sumaMatrices(void)
     }
 
     preguntarContinuar();
-    
 }
 
 //Logica de la resta
@@ -327,10 +326,8 @@ void restaMatrices(void)
             printf("\nError: No se pueden restar matrices de diferentes dimensiones.\n");
         }
 
+        preguntarContinuar();
     }
-
-    preguntarContinuar();
-
 }
 
 //Logica de la multiplicacion por un escalar
@@ -499,11 +496,11 @@ void multiplicacionMatrices(void)
 
         //Asignar dimensiones de la segunda matriz
         filasV = columnasU; // Para multiplicación, filas de la segunda matriz deben ser iguales a columnas de la primera
-        printf("Ingrese las columnas de la segunda matriz (Hasta 3 filas):\n");
-        scanf("%d", &filasV);
-        while(filasV < 1 || filasV > 3) {
-            printf("Número de filas inválido. Por favor, ingrese un número entre 1 y 3: ");
-            scanf("%d", &filasV);
+        printf("Ingrese las columnas de la segunda matriz (Hasta 3 columnas):\n");
+        scanf("%d", &columnasV);
+        while(columnasV < 1 || columnasV > 3) {
+            printf("Número de columnas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &columnasV);
         }
         
         
@@ -547,6 +544,76 @@ void multiplicacionMatrices(void)
         }
     } else if (opcionMulti == 2) {
         // Lógica para elegir matrices precargadas
+        int matrizA, matrizB;
+
+    // Mostrar matrices disponibles
+    printf("\nMatrices precargadas:\n");
+    printf("1. Matriz 1 (2x2)\n");
+    printf("2. Matriz 2 (2x2)\n");
+    printf("3. Matriz 3 (2x2)\n");
+    printf("4. Matriz 4 (3x3)\n");
+    printf("5. Matriz 5 (3x3)\n");
+
+    printf("\nSeleccione la primera matriz: ");
+    scanf("%d", &matrizA);
+
+    printf("Seleccione la segunda matriz: ");
+    scanf("%d", &matrizB);
+
+    // Caso matrices 2x2
+    if(matrizA == 1 && matrizB == 2)
+    {
+        float resultado[2][2];
+
+        resultado[0][0] = (2*1) + (5*4);
+        resultado[0][1] = (2*2) + (5*3);
+        resultado[1][0] = (3*1) + (1*4);
+        resultado[1][1] = (3*2) + (1*3);
+
+        printf("\nResultado:\n");
+
+        for(int i = 0; i < 2; i++)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                printf("%.2f ", resultado[i][j]);
+            }
+            printf("\n");
+        }
+    }
+
+    // Caso matrices 3x3
+    else if(matrizA == 4 && matrizB == 5)
+    {
+        float resultado[3][3];
+
+        resultado[0][0]=(5*5)+(4*2)+(3*2);
+        resultado[0][1]=(5*4)+(4*-1)+(3*1);
+        resultado[0][2]=(5*3)+(4*0)+(3*9);
+
+        resultado[1][0]=(2*5)+(1*2)+(0*2);
+        resultado[1][1]=(2*4)+(1*-1)+(0*1);
+        resultado[1][2]=(2*3)+(1*0)+(0*9);
+
+        resultado[2][0]=(6*5)+(7*2)+(8*2);
+        resultado[2][1]=(6*4)+(7*-1)+(8*1);
+        resultado[2][2]=(6*3)+(7*0)+(8*9);
+
+        printf("\nResultado:\n");
+
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                printf("%.2f ", resultado[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    else
+    {
+        printf("\nSolo estan implementadas las combinaciones Matriz1 x Matriz2 y Matriz4 x Matriz5.\n");
+    }
 
     }
 
@@ -606,6 +673,56 @@ void determinanteMatriz(void)
 
     } else if (opcionDet == 2) {
         // Logica para elegir matrices precargadas y calcular su determinante
+           int opcionMatriz;
+
+    printf("\nMatrices precargadas:\n");
+    printf("1. Matriz 1 (2x2)\n");
+    printf("2. Matriz 2 (2x2)\n");
+    printf("3. Matriz 3 (2x2)\n");
+    printf("4. Matriz 4 (3x3)\n");
+    printf("5. Matriz 5 (3x3)\n");
+
+    printf("\nSeleccione una matriz: ");
+    scanf("%d", &opcionMatriz);
+
+    while(opcionMatriz < 1 || opcionMatriz > 5)
+    {
+        printf("Opcion invalida. Elija entre 1 y 5: ");
+        scanf("%d", &opcionMatriz);
+    }
+
+    // Determinantes de matrices 2x2
+    if(opcionMatriz == 1)
+    {
+        determinante = (2*1) - (5*3);
+    }
+    else if(opcionMatriz == 2)
+    {
+        determinante = (1*3) - (2*4);
+    }
+    else if(opcionMatriz == 3)
+    {
+        determinante = (9*6) - (8*7);
+    }
+
+    // Determinantes de matrices 3x3
+    else if(opcionMatriz == 4)
+    {
+        determinante =
+        (5*((1*8)-(0*7)))
+        - (4*((2*8)-(0*6)))
+        + (3*((2*7)-(1*6)));
+    }
+    else if(opcionMatriz == 5)
+    {
+        determinante =
+        (5*((-1*9)-(0*1)))
+        - (4*((2*9)-(0*2)))
+        + (3*((2*1)-(-1*2)));
+    }
+
+    // Mostrar resultado
+    printf("\nEl determinante de la matriz es: %d\n", determinante);
 
     }
 
@@ -937,7 +1054,7 @@ int main(void)
     int opcion = 0;
 
     do {
-        printf("\nCalculadora de Matrices 1.0\n");
+        printf("\nCalculadora de Matrices v1.0\n");
         printf("¿Que operacion desea hacer?\n");
         printf("1. Sumar matrices\n");
         printf("2. Restar matrices\n");
@@ -996,7 +1113,7 @@ int main(void)
         }
     } while(seguir == 1);
 
-    printf("\n¡Gracias por usar la Calculadora de Matrices!\n");
+    printf("\n¡Gracias por usar la Calculadora de Matrices v1.0!\n");
     
     return 0;
 }
