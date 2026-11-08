@@ -613,11 +613,10 @@ void multiplicacionMatrices(void)
     else
     {
         printf("\nSolo estan implementadas las combinaciones Matriz1 x Matriz2 y Matriz4 x Matriz5.\n");
-    }
+        }
 
+        preguntarContinuar();
     }
-
-    preguntarContinuar();
 }
 
 //Logica de la determinante de una matriz
@@ -790,10 +789,102 @@ void transpuestaMatriz(void)
 
     } else if (opcionTransp == 2) {
         // Lógica para elegir matrices precargadas
+        } else if (opcionTransp == 2) {
+        int opcionMatriz;
+
+        printf("\nMatrices precargadas:\n");
+        printf("1. Matriz 1 (2x2)\n");
+        printf("2. Matriz 2 (2x2)\n");
+        printf("3. Matriz 3 (2x2)\n");
+        printf("4. Matriz 4 (3x3)\n");
+        printf("5. Matriz 5 (3x3)\n");
+
+        printf("\nSeleccione una matriz: ");
+        scanf("%d", &opcionMatriz);
+
+        while(opcionMatriz < 1 || opcionMatriz > 5) {
+            printf("Opcion invalida. Elija entre 1 y 5: ");
+            scanf("%d", &opcionMatriz);
+        }
+
+        printf("\nMatriz original:\n");
+        if(opcionMatriz == 1) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz1[i][j]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 2) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz2[i][j]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 3) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz3[i][j]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 4) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    printf("%.2f ", matriz4[i][j]);
+                }
+                printf("\n");
+            }
+        } else {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    printf("%.2f ", matriz5[i][j]);
+                }
+                printf("\n");
+            }
+        }
+
+        printf("\nResultado de la transpuesta de la matriz:\n");
+        if(opcionMatriz == 1) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz1[j][i]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 2) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz2[j][i]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 3) {
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    printf("%.2f ", matriz3[j][i]);
+                }
+                printf("\n");
+            }
+        } else if(opcionMatriz == 4) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    printf("%.2f ", matriz4[j][i]);
+                }
+                printf("\n");
+            }
+        } else {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    printf("%.2f ", matriz5[j][i]);
+                }
+                printf("\n");
+            }
+        }
     }
 
     preguntarContinuar();
-
 }
 
 //Logica de la inversa de una matriz
@@ -1038,14 +1129,92 @@ void sumaElementosMatriz(void)
         }
         printf("Resultado de la suma de elementos de la matriz: %.2f\n", resultadoSuma);
 
-    } else if (opcionSumaM == 2) 
-    {
-        // Lógica para elegir matrices precargadas
+    } else if (opcionSumaM == 2) {
+        int opcionMatriz;
 
+        // Mostrar las matrices precargadas disponibles
+        printf("\nMatrices precargadas:\n");
+        printf("1. Matriz 1 (2x2)\n");
+        printf("2. Matriz 2 (2x2)\n");
+        printf("3. Matriz 3 (2x2)\n");
+        printf("4. Matriz 4 (3x3)\n");
+        printf("5. Matriz 5 (3x3)\n");
+
+        // Pedir que elija una matriz
+        printf("\nSeleccione una matriz: ");
+        scanf("%d", &opcionMatriz);
+
+        // Validar que elija entre 1 y 5
+        while(opcionMatriz < 1 || opcionMatriz > 5) {
+            printf("Opcion invalida. Elija entre 1 y 5: ");
+            scanf("%d", &opcionMatriz);
+        }
+
+        // Reiniciar el acumulador en 0
+        resultadoSuma = 0;
+
+        // Matriz 1 precargada (2x2)
+        if(opcionMatriz == 1) {
+            printf("\nMatriz elegida:\n");
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    // Mostrar el elemento y sumarlo al total
+                    printf("%.2f ", matriz1[i][j]);
+                    resultadoSuma += matriz1[i][j];
+                }
+                printf("\n");
+            }
+        // Matriz 2 precargada (2x2)
+        } else if(opcionMatriz == 2) {
+            printf("\nMatriz elegida:\n");
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    // Mostrar el elemento y sumarlo al total
+                    printf("%.2f ", matriz2[i][j]);
+                    resultadoSuma += matriz2[i][j];
+                }
+                printf("\n");
+            }
+        // Matriz 3 precargada (2x2)
+        } else if(opcionMatriz == 3) {
+            printf("\nMatriz elegida:\n");
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    // Mostrar el elemento y sumarlo al total
+                    printf("%.2f ", matriz3[i][j]);
+                    resultadoSuma += matriz3[i][j];
+                }
+                printf("\n");
+            }
+        // Matriz 4 precargada (3x3)
+        } else if(opcionMatriz == 4) {
+            printf("\nMatriz elegida:\n");
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    // Mostrar el elemento y sumarlo al total
+                    printf("%.2f ", matriz4[i][j]);
+                    resultadoSuma += matriz4[i][j];
+                }
+                printf("\n");
+            }
+        // Matriz 5 precargada (3x3)
+        } else {
+            printf("\nMatriz elegida:\n");
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    // Mostrar el elemento y sumarlo al total
+                    printf("%.2f ", matriz5[i][j]);
+                    resultadoSuma += matriz5[i][j];
+                }
+                printf("\n");
+            }
+        }
+
+        // Mostrar el resultado de la suma
+        printf("\nResultado de la suma de elementos de la matriz: %.2f\n", resultadoSuma);
     }
 
     preguntarContinuar();
-
 }
 
 int main(void)
