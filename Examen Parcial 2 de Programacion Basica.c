@@ -15,6 +15,17 @@ float matriz2[2][2] = {{1.0, 2.0}, {4.0, 3.0}};
 float matriz3[2][2] = {{9.0, 8.0}, {7.0, 6.0}};
 float matriz4[3][3] = {{5.0, 4.0, 3.0}, {2.0, 1.0, 0.0}, {6.0, 7.0, 8.0}};
 float matriz5[3][3] = {{5.0, 4.0, 3.0}, {2.0, -1.0, 0.0}, {2.0, 1.0, 9.0}};
+int seguir = 1;
+
+void preguntarContinuar(void)
+{
+    printf("\n¿Desea volver al menu o salir? (1 = Volver al menu, 2 = Salir): ");
+    scanf("%d", &seguir);
+    while(seguir != 1 && seguir != 2) {
+        printf("Opcion invalida. Por favor, elija 1 o 2: ");
+        scanf("%d", &seguir);
+    }
+}
 
 //Logica de la suma  
 void sumaMatrices(void)
@@ -164,6 +175,8 @@ void sumaMatrices(void)
             printf("\nError: No se pueden sumar matrices de diferentes dimensiones.\n");
         }
     }
+
+    preguntarContinuar();
     
 }
 
@@ -316,6 +329,8 @@ void restaMatrices(void)
 
     }
 
+    preguntarContinuar();
+
 }
 
 //Logica de la multiplicacion por un escalar
@@ -449,6 +464,8 @@ void multiplicacionEscalar(void)
         }
     }
 
+    preguntarContinuar();
+
 }
 
 //Logica de la multiplicacion de matrices
@@ -532,6 +549,8 @@ void multiplicacionMatrices(void)
         // Lógica para elegir matrices precargadas
 
     }
+
+    preguntarContinuar();
 }
 
 //Logica de la determinante de una matriz
@@ -589,6 +608,8 @@ void determinanteMatriz(void)
         // Logica para elegir matrices precargadas y calcular su determinante
 
     }
+
+    preguntarContinuar();
     
 }
 
@@ -654,6 +675,8 @@ void transpuestaMatriz(void)
         // Lógica para elegir matrices precargadas
     }
 
+    preguntarContinuar();
+
 }
 
 //Logica de la inversa de una matriz
@@ -705,6 +728,7 @@ void inversaMatriz(void)
 
             if(fabsf(determinante) < 0.000001f) {
                 printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                preguntarContinuar();
                 return;
             }
 
@@ -725,6 +749,7 @@ void inversaMatriz(void)
 
             if(fabsf(determinante) < 0.000001f) {
                 printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                preguntarContinuar();
                 return;
             }
 
@@ -791,6 +816,7 @@ void inversaMatriz(void)
                            (matrizU1[0][1] * matrizU1[1][0]);
             if(fabsf(determinante) < 0.000001f) {
                 printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                preguntarContinuar();
                 return;
             }
             matrizInversa[0][0] = matrizU1[1][1] / determinante;
@@ -809,6 +835,7 @@ void inversaMatriz(void)
                             (matrizU1[1][1] * matrizU1[2][0]));
             if(fabsf(determinante) < 0.000001f) {
                 printf("Error: la matriz no tiene inversa porque su determinante es cero.\n");
+                preguntarContinuar();
                 return;
             }
             matrizInversa[0][0] = ((matrizU1[1][1] * matrizU1[2][2]) -
@@ -840,6 +867,68 @@ void inversaMatriz(void)
         printf("\n");
 
     }
+
+    preguntarContinuar();
+}
+
+//Logica de la suma de los elementos de una matriz
+void sumaElementosMatriz(void)
+{   
+    int filasU, columnasU;
+    int opcionSumaM = 0;
+    float resultadoSuma = 0;
+    printf("¿Desea ingresar sus propias matrices o elegir matrices precargadas? (1 = Ingresar, 2 = Elegir): ");
+    scanf("%d", &opcionSumaM);
+    while(opcionSumaM != 1 && opcionSumaM != 2) {
+        printf("Opción inválida. Por favor, elija 1 o 2.\n");
+        scanf("%d", &opcionSumaM);
+    }
+    
+    //Ingresar matrices manualmente
+    if(opcionSumaM == 1) {
+        //Ingresar dimensiones de las matrices
+        printf("Ingrese las filas de la matriz (Hasta 3 filas):\n");
+        scanf("%d", &filasU);
+        while(filasU < 1 || filasU > 3) {
+            printf("Número de filas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &filasU);
+        }
+        printf("Ingrese las columnas de la matriz (Hasta 3 columnas):\n");
+        scanf("%d", &columnasU);
+        while(columnasU < 1 || columnasU > 3) {
+            printf("Número de columnas inválido. Por favor, ingrese un número entre 1 y 3: ");
+            scanf("%d", &columnasU);
+        }
+
+        //Declarar matrices
+        float matrizU1[filasU][columnasU];
+
+        //Ingresar datos de la matriz
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                printf("Ingrese el elemento [%d][%d] de la matriz: ", i, j);
+                scanf("%f", &matrizU1[i][j]);
+            }
+        }
+
+        printf("\n");
+
+        //Suma de elementos de la matriz
+        for(int i = 0; i < filasU; i++) {
+            for(int j = 0; j < columnasU; j++) {
+                resultadoSuma += matrizU1[i][j];
+            }
+        }
+        printf("Resultado de la suma de elementos de la matriz: %.2f\n", resultadoSuma);
+
+    } else if (opcionSumaM == 2) 
+    {
+        // Lógica para elegir matrices precargadas
+
+    }
+
+    preguntarContinuar();
+
 }
 
 int main(void)
@@ -847,60 +936,67 @@ int main(void)
     //Menu de opciones
     int opcion = 0;
 
-    printf("Calculadora de Matrices 1.0\n");
-    printf("¿Que desea hacer?\n");
-    printf("1. Sumar matrices\n");
-    printf("2. Restar matrices\n");
-    printf("3. Multiplicar por un escalar\n");
-    printf("4. Multiplicar matrices\n");
-    printf("5. Determinante de una matriz\n");
-    printf("6. Transpuesta de una matriz\n");
-    printf("7. Inversa de una matriz\n");
+    do {
+        printf("\nCalculadora de Matrices 1.0\n");
+        printf("¿Que operacion desea hacer?\n");
+        printf("1. Sumar matrices\n");
+        printf("2. Restar matrices\n");
+        printf("3. Multiplicar por un escalar\n");
+        printf("4. Multiplicar matrices\n");
+        printf("5. Determinante de una matriz\n");
+        printf("6. Transpuesta de una matriz\n");
+        printf("7. Inversa de una matriz\n");
+        printf("8. Suma de los elementos de una matriz\n");
+        printf("9. Salir\n");
 
-    scanf("%d", &opcion);
-    while(opcion < 1 || opcion > 7)
-    {
-        printf("Opcion invalida, por favor ingrese una opcion valida: ");
         scanf("%d", &opcion);
-    }
 
-    switch(opcion){
-        case 1:
-            printf("Suma de matrices\n");
-            sumaMatrices();
+        while(opcion < 1 || opcion > 9)
+        {
+            printf("Opcion invalida, por favor ingrese una opcion valida: ");
+            scanf("%d", &opcion);
+        }
 
-            break;
-        case 2:
-            printf("Resta de matrices\n");
-            restaMatrices();
+        switch(opcion){
+            case 1:
+                printf("Suma de matrices\n");
+                sumaMatrices();
+                break;
+            case 2:
+                printf("Resta de matrices\n");
+                restaMatrices();
+                break;
+            case 3:
+                printf("Multiplicacion por un escalar\n");
+                multiplicacionEscalar();
+                break;
+            case 4:
+                printf("Multiplicacion de matrices\n");
+                multiplicacionMatrices();
+                break;
+            case 5:
+                printf("Determinante de una matriz\n");
+                determinanteMatriz();
+                break;
+            case 6:
+                printf("Transpuesta de una matriz\n");
+                transpuestaMatriz();
+                break;
+            case 7:
+                printf("Inversa de una matriz\n");
+                inversaMatriz();
+                break;
+            case 8:
+                printf("Suma de los elementos de una matriz\n");
+                sumaElementosMatriz();
+                break;
+            case 9:
+                seguir = 2;
+                break;
+        }
+    } while(seguir == 1);
 
-            break;
-        case 3:
-            printf("Multiplicacion por un escalar\n");
-            multiplicacionEscalar();
-
-            break;
-        case 4:
-            printf("Multiplicacion de matrices\n");
-            multiplicacionMatrices();
-
-            break;
-        case 5:
-            printf("Determinante de una matriz\n");
-            determinanteMatriz();
-
-            break;
-        case 6:
-            printf("Transpuesta de una matriz\n");
-            transpuestaMatriz();
-
-            break;
-        case 7:
-            printf("Inversa de una matriz\n");
-            inversaMatriz();
-
-            break;
-    }
+    printf("\n¡Gracias por usar la Calculadora de Matrices!\n");
     
     return 0;
 }
